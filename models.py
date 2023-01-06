@@ -1,4 +1,8 @@
 import random
+from pathlib import Path
+from typing import TypeAlias
+
+_Color: TypeAlias = int | str | float | tuple[int, ...]
 
 
 class Field:
@@ -18,6 +22,19 @@ class Field:
         self.name = name
         self.position = position
         self.offset = offset
+
+
+class Font:
+    """Font display settings"""
+
+    color: _Color
+    file: str | Path
+    size: int
+
+    def __init__(self, color: _Color, file: str | Path, size: int) -> None:
+        self.color = color
+        self.file = file
+        self.size = size
 
 
 class Position:
