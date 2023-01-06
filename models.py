@@ -2,6 +2,8 @@ import random
 from pathlib import Path
 from typing import TypeAlias
 
+from PIL import ImageFont
+
 _Color: TypeAlias = int | str | float | tuple[int, ...]
 
 
@@ -30,6 +32,11 @@ class Font:
     color: _Color
     file: str | Path
     size: int
+
+    @property
+    def pil_font(self) -> ImageFont.FreeTypeFont:
+        """Get Pillow ImageFont object"""
+        return ImageFont.truetype(str(self.file), self.size)
 
     def __init__(self, color: _Color, file: str | Path, size: int) -> None:
         self.color = color
