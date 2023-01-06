@@ -28,3 +28,7 @@ class Offset:
         horizontal = random.randint(-y_limit, y_limit)
 
         return cls(vertical, horizontal)
+
+    def apply(self, x: int, y: int) -> tuple[float, float]:
+        """Add the offset to a position"""
+        return x + self.horizontal, y + self.vertical
