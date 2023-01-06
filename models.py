@@ -1,6 +1,19 @@
 import random
 
 
+class Field:
+    """Editable document field"""
+
+    name: str
+    position: 'Position'
+    offset: 'Offset'
+
+    def __init__(self, name: str, position: 'Position', offset: 'Offset') -> None:
+        self.name = name
+        self.position = position
+        self.offset = offset
+
+
 class Position:
     """Position of anything on the image with pixels"""
 
