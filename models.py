@@ -8,6 +8,12 @@ class Field:
     position: 'Position'
     offset: 'Offset'
 
+    @property
+    def normalized_position(self) -> tuple[int, int]:
+        """Get offseted position and normalize it"""
+        position = self.offset.apply(self.position.x, self.position.y)
+        return tuple(map(int, position))
+
     def __init__(self, name: str, position: 'Position', offset: 'Offset') -> None:
         self.name = name
         self.position = position
