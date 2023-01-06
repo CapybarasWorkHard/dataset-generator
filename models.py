@@ -1,0 +1,9 @@
+class Position:
+    """Position of anything on the image with pixels"""
+
+    x: int
+    y: int
+
+    def __init__(self, x: int, y: int) -> None:
+        self.x = x
+        self.y = y
