@@ -32,14 +32,14 @@ class Font:
     align: Literal['center', 'left', 'right']
     anchor: str
     color: _Color
-    file: str | Path
+    file: str
     size: int
     spacing: float
 
     @property
     def pil_font(self) -> ImageFont.FreeTypeFont:
         """Get Pillow ImageFont object"""
-        return ImageFont.truetype(str(self.file), self.size)
+        return ImageFont.truetype(self.file, self.size)
 
     def __init__(
         self,
@@ -50,7 +50,7 @@ class Font:
     ) -> None:
         self.anchor = anchor
         self.color = color
-        self.file = file
+        self.file = str(file.resolve()) if isinstance(file, Path) else file
         self.size = size
 
     def draw(self, overlay: ImageDraw.ImageDraw, position: tuple[float, float], text: str):
