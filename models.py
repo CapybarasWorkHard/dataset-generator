@@ -4,7 +4,7 @@ from typing import Literal, TypeAlias
 
 from PIL import ImageFont
 
-_Color: TypeAlias = int | str | float | tuple[int, ...]
+_Color: TypeAlias = int | str | tuple[int, ...]
 
 
 class Field:
