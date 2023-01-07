@@ -12,24 +12,15 @@ class Field:
 
     name: str
     position: 'Position'
-    offset: 'Offset'
     value: str
-
-    @property
-    def normalized_position(self) -> tuple[int, int]:
-        """Get offseted position and normalize it"""
-        position = self.offset.apply(self.position.x, self.position.y)
-        return tuple(map(int, position))
 
     def __init__(
         self,
         name: str,
         position: 'Position',
-        offset: 'Offset',
         value: str,
     ) -> None:
         self.name = name
-        self.offset = offset
         self.position = position
         self.value = value
 
