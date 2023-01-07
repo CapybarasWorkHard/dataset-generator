@@ -54,10 +54,14 @@ class Font:
             align=self.align,
         )
 
-    def set_alignment(self, anchor: str, align: Literal['center', 'left', 'right']) -> 'Font':
-        """Set properties for text alignment"""
+    def set_multiline_properties(
+        self,
+        spacing: float,
+        align: Literal['center', 'left', 'right'],
+    ) -> 'Font':
+        """Set rules for displaying multiline text"""
         self.align = align
-        self.anchor = anchor
+        self.spacing = spacing
 
         return self
 
