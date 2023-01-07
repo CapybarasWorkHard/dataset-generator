@@ -1,6 +1,6 @@
 import random
 from pathlib import Path
-from typing import TypeAlias
+from typing import Literal, TypeAlias
 
 from PIL import ImageFont
 
@@ -32,6 +32,8 @@ class Font:
     color: _Color
     file: str | Path
     size: int
+    anchor: str
+    align: Literal['center', 'left', 'right']
 
     @property
     def pil_font(self) -> ImageFont.FreeTypeFont:
@@ -42,6 +44,13 @@ class Font:
         self.color = color
         self.file = file
         self.size = size
+
+    def set_alignment(self, anchor: str, align: Literal['center', 'left', 'right']) -> 'Font':
+        """Set properties for text alignment"""
+        self.anchor = anchor
+        self.align = align
+
+        return self
 
 
 class Position:
