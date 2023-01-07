@@ -2,7 +2,7 @@ import random
 from pathlib import Path
 from typing import Literal, TypeAlias
 
-from PIL import ImageFont
+from PIL import ImageDraw, ImageFont
 
 _Color: TypeAlias = int | str | tuple[int, ...]
 
@@ -44,6 +44,14 @@ class Font:
         self.color = color
         self.file = file
         self.size = size
+
+    def draw(self, overlay: ImageDraw.ImageDraw, position: tuple[float, float], text: str):
+        """Draw the text on the image overlay"""
+        overlay.text(
+            position, text, self.color, self.pil_font,
+            anchor=self.anchor,
+            align=self.align,
+        )
 
     def set_alignment(self, anchor: str, align: Literal['center', 'left', 'right']) -> 'Font':
         """Set properties for text alignment"""
