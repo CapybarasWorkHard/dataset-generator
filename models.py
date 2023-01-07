@@ -29,11 +29,11 @@ class Field:
 class Font:
     """Font display settings"""
 
+    align: Literal['center', 'left', 'right']
+    anchor: str
     color: _Color
     file: str | Path
     size: int
-    anchor: str
-    align: Literal['center', 'left', 'right']
 
     @property
     def pil_font(self) -> ImageFont.FreeTypeFont:
@@ -55,8 +55,8 @@ class Font:
 
     def set_alignment(self, anchor: str, align: Literal['center', 'left', 'right']) -> 'Font':
         """Set properties for text alignment"""
-        self.anchor = anchor
         self.align = align
+        self.anchor = anchor
 
         return self
 
