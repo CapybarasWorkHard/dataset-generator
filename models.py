@@ -82,6 +82,10 @@ class Position:
         self.x = x
         self.y = y
 
+    def shift(self, vertical: int, horizontal: int) -> 'Position':
+        """Get new shifted position"""
+        return Position(self.x + horizontal, self.y + vertical)
+
 
 class Offset:
     """Offset from the position in pixels"""
