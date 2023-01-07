@@ -34,6 +34,7 @@ class Font:
     color: _Color
     file: str | Path
     size: int
+    spacing: float
 
     @property
     def pil_font(self) -> ImageFont.FreeTypeFont:
