@@ -41,7 +41,14 @@ class Font:
         """Get Pillow ImageFont object"""
         return ImageFont.truetype(str(self.file), self.size)
 
-    def __init__(self, color: _Color, file: str | Path, size: int) -> None:
+    def __init__(
+        self,
+        color: _Color,
+        file: str | Path,
+        size: int,
+        anchor: str = 'lt',
+    ) -> None:
+        self.anchor = anchor
         self.color = color
         self.file = file
         self.size = size
