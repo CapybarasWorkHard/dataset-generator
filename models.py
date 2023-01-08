@@ -56,8 +56,9 @@ class Font:
         """Draw the text on the image overlay"""
         overlay.text(
             position, text, self.color, self.pil_font,
-            anchor=self.anchor,
-            align=self.align,
+            anchor=getattr(self, 'anchor', None),
+            align=getattr(self, 'align', 'left'),
+            spacing=getattr(self, 'spacing', 0),
         )
 
     def set_multiline_properties(
