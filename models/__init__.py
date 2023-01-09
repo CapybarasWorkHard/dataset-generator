@@ -1,6 +1,6 @@
 import random
 from pathlib import Path
-from typing import Generator, Generic, Literal, Sequence, TypeAlias, TypeVar
+from typing import Generic, Literal, Sequence, TypeAlias, TypeVar
 
 from PIL import Image, ImageDraw, ImageFont
 
@@ -9,28 +9,27 @@ _InstanceType = TypeVar('_InstanceType')
 
 
 class DocumentGenerator:
-    """Render all fields on an image using renderers"""
+    """Create an image and render all fields on it"""
 
+    groups: Sequence['FieldGroup']
     image: Image.Image
-    renderers: Sequence['Renderer']
 
     @property
     def fields(self) -> list['Field']:
         return [
             field
-            for renderer in self.renderers
-            for field in renderer.fields
+            for group in self.groups
+            for field in group.fields
         ]
 
-    def __init__(self, image: Image.Image, renderers: Sequence['Renderer']) -> None:
+    def __init__(self, image: Image.Image, groups: Sequence['FieldGroup']) -> None:
+        self.groups = groups
         self.image = image
-        self.renderers = renderers
 
     def generate(self) -> Image.Image:
-        """Walk throught the renderers and draw fields to the image"""
         image = self.image
 
-        for renderer in self.renderers:
+        for renderer in self.groups:
             image = renderer.render(image)
 
         return image
@@ -78,7 +77,7 @@ class FieldGroup:
 
     def render(self, image: Image.Image) -> Image.Image:
         self.seed()
-        return self.renderer.render(image)
+        return self.renderer.render(image, self.fields)
 
     def seed(self) -> None:
         """regenerate fields by factories if any"""
@@ -139,35 +138,23 @@ class Font:
 class Renderer:
     """Display fields on the image"""
 
-    fields: Sequence[Field]
     font: Font
 
-    def __init__(self, font: Font, fields: Sequence[Field | Factory[Field]]) -> None:
-        self.fields = tuple(self._seed_fields(fields))
+    def __init__(self, font: Font) -> None:
         self.font = font
 
-    def render(self, image: Image.Image) -> Image.Image:
+    def render(self, image: Image.Image, fields: Sequence[Field]) -> Image.Image:
         """Draw the fields on the image"""
         copy = image.copy()
         overlay = ImageDraw.Draw(copy)
-        self._draw_fields(overlay)
+        self._draw_fields(overlay, fields)
 
         return copy
 
-    def _draw_fields(self, overlay: ImageDraw.ImageDraw) -> None:
-        for field in self.fields:
+    def _draw_fields(self, overlay: ImageDraw.ImageDraw, fields: Sequence[Field]) -> None:
+        for field in fields:
             position = field.position.x, field.position.y
             self.font.draw(overlay, position, field.value)
-
-    def _seed_fields(self, sequence: Sequence[Field | Factory[Field]]) -> Generator[Field, None, None]:
-        for item in sequence:
-            match  item:
-                case Factory():
-                    yield item.create()
-                case Field():
-                    yield item
-                case _:
-                    raise TypeError(type(item), (Field, Factory[Field]))
 
 
 class Position:
