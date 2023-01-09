@@ -1,3 +1,5 @@
+from typing import Sequence
+
 from PIL import Image, ImageDraw
 
 from models import Factory, Field, Font, Renderer
@@ -26,9 +28,9 @@ class RotationRenderer(Renderer):
         font: Font,
         angle: float,
         resampling: Image.Resampling,
-        *fields: Field | Factory[Field],
+        fields: Sequence[Field | Factory[Field]],
     ) -> None:
-        super().__init__(font, *fields)
+        super().__init__(font, fields)
         self.angle = angle
         self.resampling = resampling
 

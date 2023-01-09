@@ -87,7 +87,7 @@ class Renderer:
     fields: Sequence[Field]
     font: Font
 
-    def __init__(self, font: Font, *fields: Field | Factory[Field]) -> None:
+    def __init__(self, font: Font, fields: Sequence[Field | Factory[Field]]) -> None:
         self.fields = tuple(self._seed_fields(fields))
         self.font = font
 
