@@ -14,6 +14,14 @@ class DocumentGenerator:
     image: Image.Image
     renderers: Sequence['Renderer']
 
+    @property
+    def fields(self) -> list['Field']:
+        return [
+            field
+            for renderer in self.renderers
+            for field in renderer.fields
+        ]
+
     def __init__(self, image: Image.Image, renderers: Sequence['Renderer']) -> None:
         self.image = image
         self.renderers = renderers
