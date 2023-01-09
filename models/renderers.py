@@ -1,6 +1,6 @@
 from PIL import Image, ImageDraw
 
-from models import Field, Font, Renderer
+from models import Factory, Field, Font, Renderer
 
 
 class OpacityRenderer(Renderer):
@@ -26,7 +26,7 @@ class RotationRenderer(Renderer):
         font: Font,
         angle: float,
         resampling: Image.Resampling,
-        *fields: Field,
+        *fields: Field | Factory[Field],
     ) -> None:
         super().__init__(font, *fields)
         self.angle = angle

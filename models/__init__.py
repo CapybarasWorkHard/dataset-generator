@@ -1,6 +1,6 @@
 import random
 from pathlib import Path
-from typing import Generic, Literal, Sequence, TypeAlias, TypeVar
+from typing import Generic, Generator, Literal, Sequence, TypeAlias, TypeVar
 
 from PIL import Image, ImageDraw, ImageFont
 
@@ -87,8 +87,8 @@ class Renderer:
     fields: Sequence[Field]
     font: Font
 
-    def __init__(self, font: Font, *fields: Field) -> None:
-        self.fields = fields
+    def __init__(self, font: Font, *fields: Field | Factory[Field]) -> None:
+        self.fields = tuple(self._seed_fields(fields))
         self.font = font
 
     def render(self, image: Image.Image) -> Image.Image:
@@ -103,6 +103,16 @@ class Renderer:
         for field in self.fields:
             position = field.position.x, field.position.y
             self.font.draw(overlay, position, field.value)
+
+    def _seed_fields(self, sequence: Sequence[Field | Factory[Field]]) -> Generator[Field, None, None]:
+        for item in sequence:
+            match  item:
+                case Factory():
+                    yield item.create()
+                case Field():
+                    yield item
+                case _:
+                    raise TypeError(type(item), (Field, Factory[Field]))
 
 
 class Position:
