@@ -3,7 +3,7 @@ from typing import Callable, Sequence
 from models import Factory, Field, Offset, Position
 
 
-class FieldFactory(Factory[Sequence[Field]]):
+class FieldFactory(Factory[Field]):
     name: str
     offset_limit: tuple[int, int]
     position: Position
