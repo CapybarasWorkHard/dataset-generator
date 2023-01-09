@@ -61,6 +61,33 @@ class Field:
         self.value = value
 
 
+class FieldGroup:
+    """Multiple fields designed to the same display way"""
+
+    data: Sequence[Field | Factory[Field]]
+    fields: Sequence[Field]
+    renderer: 'Renderer'
+
+    def __init__(
+        self,
+        renderer: 'Renderer',
+        data: Sequence[Field | Factory[Field]],
+    ) -> None:
+        self.data = data
+        self.renderer = renderer
+
+    def render(self, image: Image.Image) -> Image.Image:
+        self.seed()
+        return self.renderer.render(image)
+
+    def seed(self) -> None:
+        """regenerate fields by factories if any"""
+        self.fields = [
+            item.create() if isinstance(item, Factory) else item
+            for item in self.data
+        ]
+
+
 class Font:
     """Font display settings"""
 
