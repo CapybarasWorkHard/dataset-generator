@@ -1,8 +1,8 @@
 import random
 from pathlib import Path
-from typing import Literal, TypeAlias
+from typing import Literal, Sequence, TypeAlias
 
-from PIL import ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont
 
 _Color: TypeAlias = int | str | tuple[int, ...]
 
@@ -71,6 +71,30 @@ class Font:
         self.spacing = spacing
 
         return self
+
+
+class Renderer:
+    """Display fields on the image"""
+
+    fields: Sequence[Field]
+    font: Font
+
+    def __init__(self, font: Font, *fields: Field) -> None:
+        self.fields = fields
+        self.font = font
+
+    def render(self, image: Image.Image) -> Image.Image:
+        """Draw the fields on the image"""
+        copy = image.copy()
+        overlay = ImageDraw.Draw(copy)
+        self._draw_fields(overlay)
+
+        return copy
+
+    def _draw_fields(self, overlay: ImageDraw.ImageDraw) -> None:
+        for field in self.fields:
+            position = field.position.x, field.position.y
+            self.font.draw(overlay, position, field.value)
 
 
 class Position:
