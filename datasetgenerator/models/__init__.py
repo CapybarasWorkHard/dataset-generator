@@ -185,8 +185,8 @@ class Offset:
     @classmethod
     def random(cls, x_limit: int, y_limit: int):
         assert x_limit > 0 and y_limit > 0
-        vertical = random.randint(-x_limit, x_limit)
-        horizontal = random.randint(-y_limit, y_limit)
+        horizontal = random.randint(-x_limit, x_limit)
+        vertical = random.randint(-y_limit, y_limit)
 
         return cls(vertical, horizontal)
 
