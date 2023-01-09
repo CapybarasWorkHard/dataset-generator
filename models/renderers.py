@@ -1,6 +1,6 @@
 from PIL import Image, ImageDraw
 
-from models import Renderer
+from models import Field, Font, Renderer
 
 
 class OpacityRenderer(Renderer):
@@ -13,3 +13,28 @@ class OpacityRenderer(Renderer):
         self._draw_fields(overlay)
 
         return Image.alpha_composite(copy, text)
+
+
+class RotationRenderer(Renderer):
+    """Draw rotated text"""
+
+    angle: float
+    resampling: Image.Resampling
+
+    def __init__(
+        self,
+        font: Font,
+        angle: float,
+        resampling: Image.Resampling,
+        *fields: Field,
+    ) -> None:
+        super().__init__(font, *fields)
+        self.angle = angle
+        self.resampling = resampling
+
+    def render(self, image: Image.Image) -> Image.Image:
+        copy = image.rotate(self.angle, self.resampling, True)
+        overlay = ImageDraw.Draw(copy)
+        self._draw_fields(overlay)
+
+        return copy.rotate(-self.angle, self.resampling, True)
