@@ -3,9 +3,11 @@ import random
 from faker import Faker
 from PIL.Image import Resampling, open
 
-from factories import FieldFactory
-from models import DocumentGenerator, FieldGroup, Font, Position
-from models.renderers import OpacityRenderer, RotationRenderer
+from datasetgenerator.factories import FieldFactory
+from datasetgenerator.models import (
+    DocumentGenerator, FieldGroup, Font, Position
+)
+from datasetgenerator.models.renderers import OpacityRenderer, RotationRenderer
 
 faker = Faker('ru_RU')
 

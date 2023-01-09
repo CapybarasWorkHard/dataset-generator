@@ -4,10 +4,10 @@ from textwrap import fill
 from faker import Faker
 from PIL.Image import open
 
+from datasetgenerator.factories import FieldFactory
+from datasetgenerator.models import DocumentGenerator, FieldGroup, Position
+from datasetgenerator.models.renderers import OpacityRenderer
 from documents.passport_bottom import field_font, series_renderer
-from factories import FieldFactory
-from models import DocumentGenerator, FieldGroup, Position
-from models.renderers import OpacityRenderer
 
 _department_names = [
     'ТП №1 ОУФМС РОССИИ ПО {region} В {district} {city}',

@@ -3,7 +3,7 @@ from typing import Sequence
 from PIL import Image, ImageDraw
 from PIL.Image import Resampling
 
-from models import Field, Font, Renderer
+from datasetgenerator.models import Field, Font, Renderer
 
 
 class OpacityRenderer(Renderer):
