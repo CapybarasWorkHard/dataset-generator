@@ -1,13 +1,6 @@
-from typing import Callable, Generic, Sequence, TypeVar
+from typing import Callable, Sequence
 
-from models import Field, Offset, Position
-
-InstanceType = TypeVar('InstanceType')
-
-
-class Factory(Generic[InstanceType]):
-    def create(self) -> InstanceType:
-        raise NotImplementedError()
+from models import Factory, Field, Offset, Position
 
 
 class FieldFactory(Factory[Sequence[Field]]):
