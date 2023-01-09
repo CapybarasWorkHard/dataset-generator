@@ -1,4 +1,4 @@
-from typing import Callable, Sequence
+from typing import Callable
 
 from models import Factory, Field, Offset, Position
 
