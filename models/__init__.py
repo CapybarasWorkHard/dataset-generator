@@ -1,11 +1,31 @@
 import random
 from pathlib import Path
-from typing import Generic, Generator, Literal, Sequence, TypeAlias, TypeVar
+from typing import Generator, Generic, Literal, Sequence, TypeAlias, TypeVar
 
 from PIL import Image, ImageDraw, ImageFont
 
 _Color: TypeAlias = int | str | tuple[int, ...]
 _InstanceType = TypeVar('_InstanceType')
+
+
+class DocumentGenerator:
+    """Render all fields on an image using renderers"""
+
+    image: Image.Image
+    renderers: Sequence['Renderer']
+
+    def __init__(self, image: Image.Image, renderers: Sequence['Renderer']) -> None:
+        self.image = image
+        self.renderers = renderers
+
+    def generate(self) -> Image.Image:
+        """Walk throught the renderers and draw fields to the image"""
+        image = self.image
+
+        for renderer in self.renderers:
+            image = renderer.render(image)
+
+        return image
 
 
 class Factory(Generic[_InstanceType]):
