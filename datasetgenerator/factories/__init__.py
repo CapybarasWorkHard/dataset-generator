@@ -4,6 +4,8 @@ from datasetgenerator.models import Factory, Field, Offset, Position
 
 
 class FieldFactory(Factory[Field]):
+    """Generate field with random padding and value"""
+
     name: str
     offset_limit: tuple[int, int]
     position: Position
@@ -22,7 +24,6 @@ class FieldFactory(Factory[Field]):
         self.value_function = value_function
 
     def create(self) -> Field:
-        """Create random field"""
         position = self._get_position()
         value = self.value_function()
 
