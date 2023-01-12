@@ -22,7 +22,11 @@ class DocumentGenerator:
             for field in group.fields
         ]
 
-    def __init__(self, image: Image.Image, groups: Sequence['FieldGroup']) -> None:
+    def __init__(
+        self,
+        image: Image.Image,
+        groups: Sequence['FieldGroup'],
+    ) -> None:
         self.groups = groups
         self.image = image
 
@@ -124,7 +128,12 @@ class Font:
         font_name = self.pil_font.getname()
         return f'{font_name} {self.size}. {self.color}'
 
-    def draw(self, overlay: ImageDraw.ImageDraw, position: tuple[float, float], text: str):
+    def draw(
+        self,
+        overlay: ImageDraw.ImageDraw,
+        position: tuple[float, float],
+        text: str,
+    ):
         """Draw the text on the image overlay"""
         overlay.text(
             position, text, self.color, self.pil_font,
@@ -153,7 +162,11 @@ class Renderer:
     def __init__(self, font: Font) -> None:
         self.font = font
 
-    def render(self, image: Image.Image, fields: Sequence[Field]) -> Image.Image:
+    def render(
+        self,
+        image: Image.Image,
+        fields: Sequence[Field],
+    ) -> Image.Image:
         """Draw the fields on the image"""
         copy = image.copy()
         overlay = ImageDraw.Draw(copy)
@@ -161,7 +174,11 @@ class Renderer:
 
         return copy
 
-    def _draw_fields(self, overlay: ImageDraw.ImageDraw, fields: Sequence[Field]) -> None:
+    def _draw_fields(
+        self,
+        overlay: ImageDraw.ImageDraw,
+        fields: Sequence[Field],
+    ) -> None:
         for field in fields:
             position = field.position.x, field.position.y
             self.font.draw(overlay, position, field.value)
