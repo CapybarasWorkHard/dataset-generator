@@ -120,6 +120,10 @@ class Font:
         self.file = str(file.resolve()) if isinstance(file, Path) else file
         self.size = size
 
+    def __repr__(self) -> str:
+        font_name = self.pil_font.getname()
+        return f'{font_name} {self.size}. {self.color}'
+
     def draw(self, overlay: ImageDraw.ImageDraw, position: tuple[float, float], text: str):
         """Draw the text on the image overlay"""
         overlay.text(
