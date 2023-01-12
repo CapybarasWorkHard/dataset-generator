@@ -59,6 +59,9 @@ class Field:
         self.position = position
         self.value = value
 
+    def __repr__(self) -> str:
+        return f'{self.name}: \'{self.value}\' at {self.position}'
+
 
 class FieldGroup:
     """Multiple fields designed to the same display way"""
