@@ -36,6 +36,6 @@ class FieldFactory(Factory[Field]):
             return self.position
 
         offset = Offset.random(x, y)
-        vertical, horizontal = int(offset.vertical), int(offset.horizontal)
+        vertical, horizontal = map(int, offset)
 
         return self.position.shift(vertical, horizontal)
