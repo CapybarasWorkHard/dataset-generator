@@ -1,7 +1,8 @@
 import random
 
 from faker import Faker
-from PIL.Image import Resampling, open
+from PIL import Image
+from PIL.Image import Resampling
 
 from datasetgenerator.factories import FieldFactory
 from datasetgenerator.models import (
@@ -59,10 +60,6 @@ number = FieldFactory(
 
 field_font = Font((0, 0, 0, 165), 'fonts/cambriab.ttf', 48, 'ms')
 field_renderer = OpacityRenderer(field_font)
-
-series_font = Font('#660c0c', 'fonts/upcel.ttf', 84, 'ms')
-series_renderer = RotationRenderer(series_font, 90, Resampling.BICUBIC)
-
 fields = FieldGroup(field_renderer, (
     last_name,
     first_name,
@@ -71,13 +68,16 @@ fields = FieldGroup(field_renderer, (
     birth_date,
     birth_place,
 ))
+
+series_font = Font('#660c0c', 'fonts/upcel.ttf', 84, 'ms')
+series_renderer = RotationRenderer(series_font, 90, Resampling.BICUBIC)
 series = FieldGroup(series_renderer, (
     series_first_part,
     series_second_part,
     number
 ))
 
-passport_bottom_generator = DocumentGenerator(
-    open('images/passport-bottom.png'),
-    (fields, series),
-)
+image_source = 'images/passport-bottom.png'
+image = Image.open(image_source)
+
+passport_bottom_generator = DocumentGenerator(image, (fields, series))

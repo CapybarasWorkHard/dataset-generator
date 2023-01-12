@@ -2,7 +2,7 @@ import random
 from textwrap import fill
 
 from faker import Faker
-from PIL.Image import open
+from PIL import Image
 
 from datasetgenerator.factories import FieldFactory
 from datasetgenerator.models import DocumentGenerator, FieldGroup, Position
@@ -71,9 +71,7 @@ number = FieldFactory(
     value_function=lambda: str(random.randint(100000, 999999)),
 )
 
-field_font.set_multiline_properties(32, 'center')
-
-fields = FieldGroup(OpacityRenderer(field_font), (
+fields = FieldGroup(OpacityRenderer(field_font.multiline(32, 'center')), (
     department,
     date_of_issue,
     department_code,
@@ -84,7 +82,7 @@ series = FieldGroup(series_renderer, (
     number,
 ))
 
-passport_top_generator = DocumentGenerator(
-    open('images/passport-top.png'),
-    (fields, series),
-)
+image_source = 'images/passport-top.png'
+image = Image.open(image_source)
+
+passport_top_generator = DocumentGenerator(image, (fields, series))
