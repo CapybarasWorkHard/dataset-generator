@@ -24,12 +24,12 @@ class FieldFactory(Factory[Field]):
         self.value_function = value_function
 
     def create(self) -> Field:
-        position = self._get_position()
+        position = self._shift_position()
         value = self.value_function()
 
         return Field(self.name, position, value)
 
-    def _get_position(self):
+    def _shift_position(self):
         x, y = self.offset_limit
 
         if not x or not y:
