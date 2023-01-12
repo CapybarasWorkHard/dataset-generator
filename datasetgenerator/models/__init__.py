@@ -78,6 +78,9 @@ class FieldGroup:
         self.data = data
         self.renderer = renderer
 
+    def __len__(self) -> int:
+        return len(self.fields)
+
     def render(self, image: Image.Image) -> Image.Image:
         self.seed()
         return self.renderer.render(image, self.fields)
