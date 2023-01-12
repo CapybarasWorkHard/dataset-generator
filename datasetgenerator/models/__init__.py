@@ -177,6 +177,10 @@ class Position:
         self.x = x
         self.y = y
 
+    def __iter__(self):
+        for attr in self.x, self.y:
+            yield attr
+
     def shift(self, vertical: int, horizontal: int) -> 'Position':
         """Get new shifted position"""
         return Position(self.x + horizontal, self.y + vertical)
