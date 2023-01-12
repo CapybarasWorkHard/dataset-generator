@@ -71,7 +71,8 @@ number = FieldFactory(
     value_function=lambda: str(random.randint(100000, 999999)),
 )
 
-fields = FieldGroup(OpacityRenderer(field_font.multiline(32, 'center')), (
+field_font.set_multiline_properties(32, 'center')
+fields = FieldGroup(OpacityRenderer(field_font), (
     department,
     date_of_issue,
     department_code,
