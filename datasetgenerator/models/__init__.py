@@ -211,6 +211,9 @@ class Offset:
         for attr in self.vertical, self.horizontal:
             yield attr
 
+    def __repr__(self) -> str:
+        return f'{self.__class__.__name__}({self.vertical}, {self.horizontal}'
+
     def apply(self, x: int, y: int) -> tuple[float, float]:
         """Add the offset to a position"""
         return x + self.horizontal, y + self.vertical
