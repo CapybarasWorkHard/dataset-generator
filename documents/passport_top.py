@@ -43,10 +43,12 @@ department = FieldFactory(
             district=random.choice(_district_names),
             region=faker.region(),
     ).upper()),
+    offset_limit=(38, 19),
 )
 date_of_issue = FieldFactory(
     'date_of_issue', Position(430, 500),
-    value_function=lambda: faker.date(r'%d.%m.%Y')
+    value_function=lambda: faker.date(r'%d.%m.%Y'),
+    offset_limit=(10, 7)
 )
 department_code = FieldFactory(
     'department_code', Position(1100, 500),
@@ -54,6 +56,7 @@ department_code = FieldFactory(
         random.randint(100, 999),
         random.randint(100, 999),
     ),
+    offset_limit=(10, 7),
 )
 series_first_part = FieldFactory(
     'series_first_part', Position(336, 83),

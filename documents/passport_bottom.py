@@ -14,18 +14,22 @@ faker = Faker('ru_RU')
 last_name = FieldFactory(
     'last_name', Position(937, 218),
     value_function=lambda: faker.last_name().upper(),
+    offset_limit=(20, 10),
 )
 first_name = FieldFactory(
     'first_name', Position(937, 370),
     value_function=lambda: faker.first_name().upper(),
+    offset_limit=(20, 10),
 )
 middle_name = FieldFactory(
     'middle_name', Position(937, 440),
     value_function=lambda: faker.middle_name().upper(),
+    offset_limit=(20, 10),
 )
 sex = FieldFactory(
     'sex', Position(630, 510),
     value_function=lambda: random.choice(['МУЖ.', 'ЖЕН.']),
+    offset_limit=(20, 10),
 )
 birth_date = FieldFactory(
     'birth_date', Position(1055, 510),
@@ -33,10 +37,12 @@ birth_date = FieldFactory(
         minimum_age=14,
         maximum_age=60,
     ).strftime(r'%d.%m.%Y'),
+    offset_limit=(20, 10),
 )
 birth_place = FieldFactory(
     'birth_place', Position(937, 580),
     value_function=lambda: faker.city().upper(),
+    offset_limit=(20, 10),
 )
 series_first_part = FieldFactory(
     'series_first_part', Position(336, 1488 - 1405),
