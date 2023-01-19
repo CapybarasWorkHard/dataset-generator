@@ -1,8 +1,16 @@
-from typing import Callable
+from typing import Callable, Generic, TypeVar
 
 from datasetgenerator.fields import Field
-from datasetgenerator.models import Factory
 from datasetgenerator.positioning import Offset, Point
+
+_InstanceType = TypeVar('_InstanceType')
+
+
+class Factory(Generic[_InstanceType]):
+    """Allows you to dynamically create classes"""
+
+    def create(self) -> _InstanceType:
+        raise NotImplementedError()
 
 
 class FieldFactory(Factory[Field]):

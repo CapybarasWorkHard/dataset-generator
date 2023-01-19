@@ -1,12 +1,12 @@
 from pathlib import Path
-from typing import Generic, Literal, Sequence, TypeAlias, TypeVar
+from typing import Literal, Sequence, TypeAlias
 
 from PIL import Image, ImageDraw, ImageFont
 
 from datasetgenerator.fields import Field
+from datasetgenerator.factories import Factory
 
 _Color: TypeAlias = int | str | tuple[int, ...]
-_InstanceType = TypeVar('_InstanceType')
 
 
 class DocumentGenerator:
@@ -38,13 +38,6 @@ class DocumentGenerator:
             image = renderer.render(image)
 
         return image
-
-
-class Factory(Generic[_InstanceType]):
-    """Allows you to dynamically create classes"""
-
-    def create(self) -> _InstanceType:
-        raise NotImplementedError()
 
 
 class FieldGroup:
