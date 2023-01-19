@@ -10,19 +10,19 @@ class FieldFactory(Factory[Field]):
 
     name: str
     offset_limit: tuple[int, int]
-    position: Point
+    point: Point
     value_function: Callable[[], str]
 
     def __init__(
         self,
         name: str,
-        position: Point,
+        point: Point,
         value_function: Callable[[], str],
         offset_limit: tuple[int, int] | None = None,
     ) -> None:
         self.name = name
         self.offset_limit = offset_limit or (0, 0)
-        self.position = position
+        self.point = point
         self.value_function = value_function
 
     def create(self) -> Field:
@@ -35,9 +35,9 @@ class FieldFactory(Factory[Field]):
         x, y = self.offset_limit
 
         if not x or not y:
-            return self.position
+            return self.point
 
         offset = Offset.random(x, y)
         vertical, horizontal = map(int, offset)
 
-        return self.position.shift(vertical, horizontal)
+        return self.point.shift(vertical, horizontal)

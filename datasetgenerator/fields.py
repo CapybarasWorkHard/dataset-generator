@@ -11,16 +11,16 @@ class Field:
     """Editable document field"""
 
     name: str
-    position: Point
+    point: Point
     value: str
 
-    def __init__(self, name: str, position: Point, value: str) -> None:
+    def __init__(self, name: str, point: Point, value: str) -> None:
         self.name = name
-        self.position = position
+        self.point = point
         self.value = value
 
     def __repr__(self) -> str:
-        return f'{self.name}: \'{self.value}\' at {self.position}'
+        return f'{self.name}: \'{self.value}\' at {self.point}'
 
 
 class FieldGroup:

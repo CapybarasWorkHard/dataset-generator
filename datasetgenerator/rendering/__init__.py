@@ -91,5 +91,5 @@ class Renderer:
         fields: Sequence[Field],
     ) -> None:
         for field in fields:
-            position = field.position.x, field.position.y
+            position = field.point.x, field.point.y
             self.font.draw(overlay, position, field.value)
