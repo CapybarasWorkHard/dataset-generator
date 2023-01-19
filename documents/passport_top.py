@@ -5,7 +5,7 @@ from faker import Faker
 from PIL import Image
 
 from datasetgenerator.factories import FieldFactory
-from datasetgenerator.models import DocumentGenerator, FieldGroup, Position
+from datasetgenerator.models import DocumentGenerator, FieldGroup, Point
 from datasetgenerator.models.renderers import OpacityRenderer
 from documents.passport_bottom import field_font, series_renderer
 
@@ -36,7 +36,7 @@ _district_names = [
 faker = Faker('ru_RU')
 
 department = FieldFactory(
-    'department', Position(780, 260),
+    'department', Point(780, 260),
     value_function=lambda: fill(width=30, text=random.choice(
         _department_names).format(
             city=faker.city(),
@@ -46,12 +46,12 @@ department = FieldFactory(
     offset_limit=(38, 19),
 )
 date_of_issue = FieldFactory(
-    'date_of_issue', Position(430, 500),
+    'date_of_issue', Point(430, 500),
     value_function=lambda: faker.date(r'%d.%m.%Y'),
     offset_limit=(10, 7)
 )
 department_code = FieldFactory(
-    'department_code', Position(1100, 500),
+    'department_code', Point(1100, 500),
     value_function=lambda: '{}-{}'.format(
         random.randint(100, 999),
         random.randint(100, 999),
@@ -59,15 +59,15 @@ department_code = FieldFactory(
     offset_limit=(10, 7),
 )
 series_first_part = FieldFactory(
-    'series_first_part', Position(336, 83),
+    'series_first_part', Point(336, 83),
     value_function=lambda: str(random.randint(10, 99)),
 )
 series_second_part = FieldFactory(
-    'series_second_part', Position(458, 83),
+    'series_second_part', Point(458, 83),
     value_function=lambda: str(random.randint(10, 99)),
 )
 number = FieldFactory(
-    'number', Position(650, 83),
+    'number', Point(650, 83),
     value_function=lambda: str(random.randint(100000, 999999)),
 )
 

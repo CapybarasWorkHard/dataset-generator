@@ -1,6 +1,6 @@
 from typing import Callable
 
-from datasetgenerator.models import Factory, Field, Offset, Position
+from datasetgenerator.models import Factory, Field, Offset, Point
 
 
 class FieldFactory(Factory[Field]):
@@ -8,13 +8,13 @@ class FieldFactory(Factory[Field]):
 
     name: str
     offset_limit: tuple[int, int]
-    position: Position
+    position: Point
     value_function: Callable[[], str]
 
     def __init__(
         self,
         name: str,
-        position: Position,
+        position: Point,
         value_function: Callable[[], str],
         offset_limit: tuple[int, int] | None = None,
     ) -> None:

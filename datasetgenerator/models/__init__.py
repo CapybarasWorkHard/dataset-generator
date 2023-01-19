@@ -50,13 +50,13 @@ class Field:
     """Editable document field"""
 
     name: str
-    position: 'Position'
+    position: 'Point'
     value: str
 
     def __init__(
         self,
         name: str,
-        position: 'Position',
+        position: 'Point',
         value: str,
     ) -> None:
         self.name = name
@@ -184,7 +184,7 @@ class Renderer:
             self.font.draw(overlay, position, field.value)
 
 
-class Position:
+class Point:
     """Position of anything on the image with pixels"""
 
     x: int
@@ -201,9 +201,9 @@ class Position:
     def __repr__(self) -> str:
         return f'{self.__class__.__name__}({self.x}, {self.y})'
 
-    def shift(self, vertical: int, horizontal: int) -> 'Position':
+    def shift(self, vertical: int, horizontal: int) -> 'Point':
         """Get new shifted position"""
-        return Position(self.x + horizontal, self.y + vertical)
+        return Point(self.x + horizontal, self.y + vertical)
 
 
 class Offset:
