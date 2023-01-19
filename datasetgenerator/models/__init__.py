@@ -1,10 +1,10 @@
 from typing import Sequence
 
-from PIL import Image, ImageDraw
+from PIL import Image
 
 from datasetgenerator.factories import Factory
 from datasetgenerator.fields import Field
-from datasetgenerator.rendering import Font
+from datasetgenerator.rendering import Renderer
 
 
 class DocumentGenerator:
@@ -66,33 +66,3 @@ class FieldGroup:
             item.create() if isinstance(item, Factory) else item
             for item in self.data
         ]
-
-
-class Renderer:
-    """Display fields on the image"""
-
-    font: Font
-
-    def __init__(self, font: Font) -> None:
-        self.font = font
-
-    def render(
-        self,
-        image: Image.Image,
-        fields: Sequence[Field],
-    ) -> Image.Image:
-        """Draw the fields on the image"""
-        copy = image.copy()
-        overlay = ImageDraw.Draw(copy)
-        self._draw_fields(overlay, fields)
-
-        return copy
-
-    def _draw_fields(
-        self,
-        overlay: ImageDraw.ImageDraw,
-        fields: Sequence[Field],
-    ) -> None:
-        for field in fields:
-            position = field.position.x, field.position.y
-            self.font.draw(overlay, position, field.value)

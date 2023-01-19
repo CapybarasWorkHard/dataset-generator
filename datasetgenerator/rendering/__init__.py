@@ -1,7 +1,9 @@
 from pathlib import Path
-from typing import Literal, TypeAlias
+from typing import Literal, Sequence, TypeAlias
 
-from PIL import ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont
+
+from datasetgenerator.fields import Field
 
 _Color: TypeAlias = int | str | tuple[int, ...]
 
@@ -61,3 +63,33 @@ class Font:
         self.spacing = spacing
 
         return self
+
+
+class Renderer:
+    """Display fields on the image"""
+
+    font: Font
+
+    def __init__(self, font: Font) -> None:
+        self.font = font
+
+    def render(
+        self,
+        image: Image.Image,
+        fields: Sequence[Field],
+    ) -> Image.Image:
+        """Draw the fields on the image"""
+        copy = image.copy()
+        overlay = ImageDraw.Draw(copy)
+        self._draw_fields(overlay, fields)
+
+        return copy
+
+    def _draw_fields(
+        self,
+        overlay: ImageDraw.ImageDraw,
+        fields: Sequence[Field],
+    ) -> None:
+        for field in fields:
+            position = field.position.x, field.position.y
+            self.font.draw(overlay, position, field.value)
