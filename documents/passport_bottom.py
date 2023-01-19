@@ -4,11 +4,11 @@ from faker import Faker
 from PIL import Image
 from PIL.Image import Resampling
 
-from datasetgenerator.factories import FieldFactory
-from datasetgenerator.models import (
-    DocumentGenerator, FieldGroup, Font, Point
-)
-from datasetgenerator.models.renderers import OpacityRenderer, RotationRenderer
+from datasetgenerator import DocumentGenerator
+from datasetgenerator.factories.fields import FieldFactory
+from datasetgenerator.fields import FieldGroup
+from datasetgenerator.positioning import Point
+from datasetgenerator.rendering import Font, renderers
 
 faker = Faker('ru_RU')
 
@@ -59,7 +59,7 @@ number = FieldFactory(
 )
 
 field_font = Font((0, 0, 0, 165), 'fonts/cambriab.ttf', 48, 'ms')
-field_renderer = OpacityRenderer(field_font)
+field_renderer = renderers.OpacityRenderer(field_font)
 fields = FieldGroup(field_renderer, (
     last_name,
     first_name,
@@ -70,7 +70,9 @@ fields = FieldGroup(field_renderer, (
 ))
 
 series_font = Font('#660c0c', 'fonts/upcel.ttf', 84, 'ms')
-series_renderer = RotationRenderer(series_font, 90, Resampling.BICUBIC)
+series_renderer = renderers.RotationRenderer(
+    series_font, 90, Resampling.BICUBIC
+)
 series = FieldGroup(series_renderer, (
     series_first_part,
     series_second_part,
