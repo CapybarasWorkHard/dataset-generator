@@ -4,9 +4,11 @@ from textwrap import fill
 from faker import Faker
 from PIL import Image
 
-from datasetgenerator.factories import FieldFactory
-from datasetgenerator.models import DocumentGenerator, FieldGroup, Point
-from datasetgenerator.models.renderers import OpacityRenderer
+from datasetgenerator import DocumentGenerator
+from datasetgenerator.factories.fields import FieldFactory
+from datasetgenerator.fields import FieldGroup
+from datasetgenerator.positioning import Point
+from datasetgenerator.rendering import renderers
 from documents.passport_bottom import field_font, series_renderer
 
 _department_names = [
@@ -72,7 +74,7 @@ number = FieldFactory(
 )
 
 field_font.set_multiline_properties(32, 'center')
-fields = FieldGroup(OpacityRenderer(field_font), (
+fields = FieldGroup(renderers.OpacityRenderer(field_font), (
     department,
     date_of_issue,
     department_code,

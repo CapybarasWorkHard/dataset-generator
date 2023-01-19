@@ -1,21 +1,23 @@
 from typing import Sequence
 
-from PIL import Image, ImageDraw
-from PIL.Image import Resampling
+from PIL import ImageDraw
+from PIL.Image import Image, Resampling, alpha_composite
+from PIL.Image import new as new_image
 
-from datasetgenerator.models import Field, Font, Renderer
+from datasetgenerator.fields import Field
+from datasetgenerator.rendering import Font, Renderer
 
 
 class OpacityRenderer(Renderer):
     """Allows you to draw with translucent font"""
 
-    def render(self, image: Image.Image, fields: Sequence[Field]) -> Image.Image:
+    def render(self, image: Image, fields: Sequence[Field]) -> Image:
         copy = image.convert('RGBA')
-        text = Image.new('RGBA', image.size, (0, 0, 0, 0))
+        text = new_image('RGBA', image.size, (0, 0, 0, 0))
         overlay = ImageDraw.Draw(text)
         self._draw_fields(overlay, fields)
 
-        return Image.alpha_composite(copy, text)
+        return alpha_composite(copy, text)
 
 
 class RotationRenderer(Renderer):
@@ -24,12 +26,12 @@ class RotationRenderer(Renderer):
     angle: float
     resampling: Resampling
 
-    def __init__(self, font: Font, angle: float, resampling: Resampling) -> None:
+    def __init__(self, font: Font, angle: float, resample: Resampling) -> None:
         super().__init__(font)
         self.angle = angle
-        self.resampling = resampling
+        self.resampling = resample
 
-    def render(self, image: Image.Image, fields: Sequence[Field]) -> Image.Image:
+    def render(self, image: Image, fields: Sequence[Field]) -> Image:
         copy = image.rotate(self.angle, self.resampling, True)
         overlay = ImageDraw.Draw(copy)
         self._draw_fields(overlay, fields)
