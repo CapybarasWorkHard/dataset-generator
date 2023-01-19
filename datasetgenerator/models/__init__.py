@@ -4,6 +4,8 @@ from typing import Generic, Literal, Sequence, TypeAlias, TypeVar
 
 from PIL import Image, ImageDraw, ImageFont
 
+from datasetgenerator.positioning import Point
+
 _Color: TypeAlias = int | str | tuple[int, ...]
 _InstanceType = TypeVar('_InstanceType')
 
@@ -50,13 +52,13 @@ class Field:
     """Editable document field"""
 
     name: str
-    position: 'Point'
+    position: Point
     value: str
 
     def __init__(
         self,
         name: str,
-        position: 'Point',
+        position: Point,
         value: str,
     ) -> None:
         self.name = name
@@ -182,28 +184,6 @@ class Renderer:
         for field in fields:
             position = field.position.x, field.position.y
             self.font.draw(overlay, position, field.value)
-
-
-class Point:
-    """Position of anything on the image with pixels"""
-
-    x: int
-    y: int
-
-    def __init__(self, x: int, y: int) -> None:
-        self.x = x
-        self.y = y
-
-    def __iter__(self):
-        for attr in self.x, self.y:
-            yield attr
-
-    def __repr__(self) -> str:
-        return f'{self.__class__.__name__}({self.x}, {self.y})'
-
-    def shift(self, vertical: int, horizontal: int) -> 'Point':
-        """Get new shifted position"""
-        return Point(self.x + horizontal, self.y + vertical)
 
 
 class Offset:
