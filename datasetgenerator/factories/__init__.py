@@ -1,7 +1,7 @@
 from typing import Callable
 
-from datasetgenerator.models import Factory, Field, Offset
-from datasetgenerator.positioning import Point
+from datasetgenerator.models import Factory, Field
+from datasetgenerator.positioning import Offset, Point
 
 
 class FieldFactory(Factory[Field]):

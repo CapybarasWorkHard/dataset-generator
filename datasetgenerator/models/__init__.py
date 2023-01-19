@@ -1,4 +1,3 @@
-import random
 from pathlib import Path
 from typing import Generic, Literal, Sequence, TypeAlias, TypeVar
 
@@ -184,33 +183,3 @@ class Renderer:
         for field in fields:
             position = field.position.x, field.position.y
             self.font.draw(overlay, position, field.value)
-
-
-class Offset:
-    """Offset from the position in pixels"""
-
-    vertical: float
-    horizontal: float
-
-    @classmethod
-    def random(cls, x_limit: int, y_limit: int):
-        assert x_limit > 0 and y_limit > 0
-        horizontal = random.randint(-x_limit, x_limit)
-        vertical = random.randint(-y_limit, y_limit)
-
-        return cls(vertical, horizontal)
-
-    def __init__(self, vertical: float, horizontal: float) -> None:
-        self.vertical = vertical
-        self.horizontal = horizontal
-
-    def __iter__(self):
-        for attr in self.vertical, self.horizontal:
-            yield attr
-
-    def __repr__(self) -> str:
-        return f'{self.__class__.__name__}({self.vertical}, {self.horizontal}'
-
-    def apply(self, x: int, y: int) -> tuple[float, float]:
-        """Add the offset to a position"""
-        return x + self.horizontal, y + self.vertical
