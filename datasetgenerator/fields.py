@@ -28,11 +28,11 @@ class FieldGroup:
 
     data: Sequence[Field | Factory[Field]]
     fields: Sequence[Field]
-    renderer: 'Renderer'
+    renderer: Renderer
 
     def __init__(
         self,
-        renderer: 'Renderer',
+        renderer: Renderer,
         data: Sequence[Field | Factory[Field]],
     ) -> None:
         self.data = data
