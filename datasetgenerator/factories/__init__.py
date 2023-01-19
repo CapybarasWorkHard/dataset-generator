@@ -1,6 +1,7 @@
 from typing import Callable
 
-from datasetgenerator.models import Factory, Field
+from datasetgenerator.fields import Field
+from datasetgenerator.models import Factory
 from datasetgenerator.positioning import Offset, Point
 
 

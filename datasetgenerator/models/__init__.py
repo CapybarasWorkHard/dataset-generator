@@ -3,7 +3,7 @@ from typing import Generic, Literal, Sequence, TypeAlias, TypeVar
 
 from PIL import Image, ImageDraw, ImageFont
 
-from datasetgenerator.positioning import Point
+from datasetgenerator.fields import Field
 
 _Color: TypeAlias = int | str | tuple[int, ...]
 _InstanceType = TypeVar('_InstanceType')
@@ -45,27 +45,6 @@ class Factory(Generic[_InstanceType]):
 
     def create(self) -> _InstanceType:
         raise NotImplementedError()
-
-
-class Field:
-    """Editable document field"""
-
-    name: str
-    position: Point
-    value: str
-
-    def __init__(
-        self,
-        name: str,
-        position: Point,
-        value: str,
-    ) -> None:
-        self.name = name
-        self.position = position
-        self.value = value
-
-    def __repr__(self) -> str:
-        return f'{self.name}: \'{self.value}\' at {self.position}'
 
 
 class FieldGroup:
