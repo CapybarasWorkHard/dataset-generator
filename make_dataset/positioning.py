@@ -17,6 +17,7 @@ class Point:
         return Point(self.x + horizontal, self.y + vertical)
 
 
+@dataclass
 class Offset:
     """Offset from the position in pixels"""
 
@@ -31,16 +32,9 @@ class Offset:
 
         return cls(vertical, horizontal)
 
-    def __init__(self, vertical: float, horizontal: float) -> None:
-        self.vertical = vertical
-        self.horizontal = horizontal
-
     def __iter__(self):
         for attr in self.vertical, self.horizontal:
             yield attr
-
-    def __repr__(self) -> str:
-        return f'{self.__class__.__name__}{tuple(self)}'
 
     def apply(self, x: int, y: int) -> tuple[float, float]:
         """Add the offset to a position"""
