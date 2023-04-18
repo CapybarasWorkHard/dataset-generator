@@ -24,9 +24,11 @@ def enable_logging(level: int = logging.DEBUG) -> None:
 
 
 def get_uid() -> str:
-    """Generate random uuid4 """
+    """Generate random uuid4"""
     uid = uuid.uuid4()
-    return str(uid).replace('-', '')
+    name = str(uid).split('-')[:2]
+
+    return ''.join(name)
 
 
 def create_argument_parser() -> argparse.ArgumentParser:
