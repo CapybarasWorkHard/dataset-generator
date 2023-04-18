@@ -86,6 +86,7 @@ def main() -> None:
         logging.critical('Process stopped due to an uncaught exception')
         logging.error('%s: %s', type(exc), str(exc))
         logging.debug(traceback.format_exception(exc))
+        sys.exit(1)
 
 
 if __name__ == '__main__':
