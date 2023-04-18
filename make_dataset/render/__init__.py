@@ -30,11 +30,15 @@ class Font:
         file: str | Path,
         size: int,
         anchor: str = 'lt',
+        spacing: float = 4.0,
+        align: Literal['center', 'left', 'right'] = 'left',
     ) -> None:
         self.anchor = anchor
         self.color = color
         self.file = str(file.resolve()) if isinstance(file, Path) else file
         self.size = size
+        self.align = align
+        self.spacing = spacing
 
     def __repr__(self) -> str:
         font_name = self.pil_font.getname()
@@ -45,25 +49,17 @@ class Font:
         overlay: ImageDraw.ImageDraw,
         position: tuple[float, float],
         text: str,
-    ):
+    ) -> None:
         """Draw the text on the image overlay"""
         overlay.text(
-            position, text, self.color, self.pil_font,
-            anchor=getattr(self, 'anchor', None),
-            align=getattr(self, 'align', 'left'),
-            spacing=getattr(self, 'spacing', 0),
+            position,
+            text,
+            self.color,
+            self.pil_font,
+            self.anchor,
+            self.spacing,
+            self.align,
         )
-
-    def set_multiline_properties(
-        self,
-        spacing: float,
-        align: Literal['center', 'left', 'right'],
-    ) -> 'Font':
-        """Set rules for displaying multiline text"""
-        self.align = align
-        self.spacing = spacing
-
-        return self
 
 
 class Renderer:
