@@ -1,15 +1,26 @@
 import argparse
+import logging
+import sys
 import time
+import traceback
 import uuid
 from pathlib import Path
 
 from documents.passport_bottom import passport_bottom_generator
 from documents.passport_top import passport_top_generator
+from make_dataset import DocumentGenerator
 
-documents = {
-    'passport_bottom': passport_bottom_generator,
-    'passport_top': passport_top_generator,
+DOCUMENTS = {
+    'ru_passport_page4': passport_bottom_generator,
+    'ru_passport_page5': passport_top_generator,
 }
+
+
+def enable_logging(level: int = logging.DEBUG) -> None:
+    logging.basicConfig(
+        format='%(message)s',
+        level=level,
+    )
 
 
 def get_uid() -> str:
@@ -18,12 +29,12 @@ def get_uid() -> str:
     return str(uid).replace('-', '')
 
 
-if __name__ == '__main__':
+def create_argument_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         'document',
         action='store',
-        choices=documents.keys(),
+        choices=DOCUMENTS.keys(),
     )
     parser.add_argument(
         'dest',
@@ -42,20 +53,39 @@ if __name__ == '__main__':
         action='store_true',
         help='не выводить ничего в консоль'
     )
-    args = parser.parse_args()
 
-    save_path = Path(args.dest).resolve()
-    generator = documents.get(args.document)
-    assert generator, 'No generator found'
+    return parser
 
-    for iteration in range(args.dataset_length):
-        new_name = save_path / f'{get_uid()}.png'
-        generator.generate().save(new_name)
 
-        if args.quiet:
-            continue
+def create_dataset(generator: DocumentGenerator, length: int, save_path: Path) -> None:
+    for iteration in range(length):
+        path = save_path / f'{get_uid()}.png'
+        generator.generate().save(path)
+        logging.info('[%i / %i] %s', iteration + 1, length, path)
 
-        print(f'[{iteration + 1} / {args.dataset_length}] {new_name}')
+    logging.info('Completed in %.3fs', time.process_time())
 
-    if not args.quiet:
-        print('\n', f'completed in {time.process_time():.3f}s')
+
+def main() -> None:
+    try:
+        parser = create_argument_parser()
+        args = parser.parse_args()
+
+        enable_logging(50 if args.quiet else 10)
+
+        save_path = Path(args.dest)
+        generator = DOCUMENTS.get(args.document)
+        assert generator, 'No generator found'
+
+        create_dataset(generator, args.dataset_length, save_path)
+    except KeyboardInterrupt:
+        logging.critical('Process stopped by user')
+        sys.exit(0)
+    except Exception as exc:
+        logging.critical('Process stopped due to an uncaught exception')
+        logging.error('%s: %s', type(exc), str(exc))
+        logging.debug(traceback.format_exception(exc))
+
+
+if __name__ == '__main__':
+    main()
