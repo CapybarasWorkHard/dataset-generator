@@ -34,6 +34,7 @@ class DocumentGenerator:
         image = self.template
 
         for group in self.groups:
+            group.seed()
             image = group.render(image)
 
         return image
