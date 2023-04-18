@@ -115,7 +115,6 @@ class FieldGroup:
         return len(self.fields)
 
     def render(self, image: Image.Image) -> Image.Image:
-        self.seed()
         return self.renderer.render(image, self.fields)
 
     def seed(self) -> None:
