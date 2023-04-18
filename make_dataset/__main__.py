@@ -6,8 +6,8 @@ import traceback
 import uuid
 from pathlib import Path
 
-from documents.rus_passport.passport_bottom import passport_bottom_generator
-from documents.rus_passport.passport_top import passport_top_generator
+from make_dataset.documents.rus_passport.passport_bottom import passport_bottom_generator
+from make_dataset.documents.rus_passport.passport_top import passport_top_generator
 from make_dataset import DocumentGenerator
 
 DOCUMENTS = {

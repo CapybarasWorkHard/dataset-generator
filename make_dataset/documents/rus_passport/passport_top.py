@@ -4,7 +4,7 @@ import textwrap
 from faker import Faker
 from PIL import Image
 
-from documents.rus_passport import field_renderer, series_renderer
+from make_dataset.documents.rus_passport import field_renderer, series_renderer
 from make_dataset import DocumentGenerator
 from make_dataset.factories.fields import FieldFactory
 from make_dataset.positioning import Point
