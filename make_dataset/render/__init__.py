@@ -3,6 +3,7 @@ from typing import Literal, Sequence, TypeAlias
 
 from PIL import Image, ImageDraw, ImageFont
 
+from make_dataset.factories import Factory
 from make_dataset.fields import Field
 
 _Color: TypeAlias = int | str | tuple[int, ...]
@@ -93,3 +94,33 @@ class Renderer:
         for field in fields:
             position = field.point.x, field.point.y
             self.font.draw(overlay, position, field.value)
+
+
+class FieldGroup:
+    """Multiple fields designed to the same display way"""
+
+    data: Sequence[Field | Factory[Field]]
+    fields: Sequence[Field]
+    renderer: Renderer
+
+    def __init__(
+        self,
+        renderer: Renderer,
+        data: Sequence[Field | Factory[Field]],
+    ) -> None:
+        self.data = data
+        self.renderer = renderer
+
+    def __len__(self) -> int:
+        return len(self.fields)
+
+    def render(self, image: Image.Image) -> Image.Image:
+        self.seed()
+        return self.renderer.render(image, self.fields)
+
+    def seed(self) -> None:
+        """regenerate fields by factories if any"""
+        self.fields = [
+            item.create() if isinstance(item, Factory) else item
+            for item in self.data
+        ]

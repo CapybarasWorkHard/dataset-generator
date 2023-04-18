@@ -31,7 +31,7 @@ class FieldFactory(Factory[Field]):
 
         return Field(self.name, position, value)
 
-    def _shift_position(self):
+    def _shift_position(self) -> Point:
         x, y = self.offset_limit
 
         if not x or not y:

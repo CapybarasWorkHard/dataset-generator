@@ -2,7 +2,8 @@ from typing import Sequence
 
 from PIL import Image
 
-from make_dataset.fields import Field, FieldGroup
+from make_dataset.fields import Field
+from make_dataset.render import FieldGroup
 
 __version__ = '0.1.0'
 
@@ -10,11 +11,11 @@ __version__ = '0.1.0'
 class DocumentGenerator:
     """Create an image and render all fields on it"""
 
-    groups: Sequence['FieldGroup']
+    groups: Sequence[FieldGroup]
     image: Image.Image
 
     @property
-    def fields(self) -> list['Field']:
+    def fields(self) -> list[Field]:
         return [
             field
             for group in self.groups
@@ -24,7 +25,7 @@ class DocumentGenerator:
     def __init__(
         self,
         image: Image.Image,
-        groups: Sequence['FieldGroup'],
+        groups: Sequence[FieldGroup],
     ) -> None:
         self.groups = groups
         self.image = image

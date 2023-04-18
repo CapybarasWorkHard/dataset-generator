@@ -4,12 +4,11 @@ from textwrap import fill
 from faker import Faker
 from PIL import Image
 
+from documents.passport_bottom import field_font, series_renderer
 from make_dataset import DocumentGenerator
 from make_dataset.factories.fields import FieldFactory
-from make_dataset.fields import FieldGroup
 from make_dataset.positioning import Point
-from make_dataset.render import renderers
-from documents.passport_bottom import field_font, series_renderer
+from make_dataset.render import FieldGroup, renderers
 
 _department_names = [
     'ТП №1 ОУФМС РОССИИ ПО {region} В {district} {city}',
