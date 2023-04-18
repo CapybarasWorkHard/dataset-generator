@@ -22,18 +22,28 @@
 
 ```python
 from PIL import Image
-from models import DocumentGenerator, FieldGroup, Font, Renderer, Field, Position
 
-surname = Field('name', Position(100, 100), 'Иванов')
-first_name = Field('name', Position(100, 100), 'Иван')
-middle_name = Field('name', Position(100, 100), 'Иванович')
+from make_dataset import DocumentGenerator, FieldGroup
+from make_dataset.fields import Field
+from make_dataset.positioning import Point
+from make_dataset.render import Font, Renderer
+
+surname = Field('name', Point(100, 100), 'Иванов')
+first_name = Field('name', Point(100, 100), 'Иван')
+middle_name = Field('name', Point(100, 100), 'Иванович')
 
 font = Font('#000', 'font.ttf', 32)
 renderer = Renderer(font)
-full_name = FieldGroup(renderer, (surname, first_name, middle_name))
+full_name = FieldGroup(renderer, (
+    surname,
+    first_name,
+    middle_name,
+))
 
 image = Image.open('template.png')
 generator = DocumentGenerator(image, [full_name])
+
+generator.generate().show()
 ```
 
 **Пример 2**. Использование FieldFactory для геренации данных
