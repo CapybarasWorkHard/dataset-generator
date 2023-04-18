@@ -8,7 +8,7 @@ from make_dataset import DocumentGenerator
 from make_dataset.factories.fields import FieldFactory
 from make_dataset.fields import FieldGroup
 from make_dataset.positioning import Point
-from make_dataset.rendering import Font, renderers
+from make_dataset.render import Font, renderers
 
 faker = Faker('ru_RU')
 

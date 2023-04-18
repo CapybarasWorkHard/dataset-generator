@@ -5,7 +5,7 @@ from PIL.Image import Image, Resampling, alpha_composite
 from PIL.Image import new as new_image
 
 from make_dataset.fields import Field
-from make_dataset.rendering import Font, Renderer
+from make_dataset.render import Font, Renderer
 
 
 class OpacityRenderer(Renderer):

@@ -4,7 +4,7 @@ from PIL import Image
 
 from make_dataset.factories import Factory
 from make_dataset.positioning import Point
-from make_dataset.rendering import Renderer
+from make_dataset.render import Renderer
 
 
 class Field:
