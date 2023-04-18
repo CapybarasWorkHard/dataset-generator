@@ -5,7 +5,7 @@ from PIL import Image
 from make_dataset.fields import Field
 from make_dataset.render import FieldGroup
 
-__version__ = '0.1.0'
+__version__ = '1.0.0'
 
 
 class DocumentGenerator:
