@@ -70,8 +70,9 @@ def main() -> None:
     try:
         parser = create_argument_parser()
         args = parser.parse_args()
+        log_level = logging.CRITICAL if args.quiet else logging.DEBUG
 
-        enable_logging(50 if args.quiet else 10)
+        enable_logging(log_level)
 
         save_path = Path(args.dest)
         generator = DOCUMENTS.get(args.document)
