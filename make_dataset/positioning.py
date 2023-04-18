@@ -25,10 +25,10 @@ class Offset:
     horizontal: float
 
     @classmethod
-    def random(cls, x_limit: int, y_limit: int):
-        assert x_limit > 0 and y_limit > 0
-        horizontal = random.randint(-x_limit, x_limit)
-        vertical = random.randint(-y_limit, y_limit)
+    def random(cls, x: int, y: int) -> 'Offset':
+        assert x > 0 and y > 0, 'Values should be greater than zero'
+        horizontal = random.randint(-x, x)
+        vertical = random.randint(-y, y)
 
         return cls(vertical, horizontal)
 
