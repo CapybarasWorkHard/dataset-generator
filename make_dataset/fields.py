@@ -2,9 +2,9 @@ from typing import Sequence
 
 from PIL import Image
 
-from datasetgenerator.factories import Factory
-from datasetgenerator.positioning import Point
-from datasetgenerator.rendering import Renderer
+from make_dataset.factories import Factory
+from make_dataset.positioning import Point
+from make_dataset.render import Renderer
 
 
 class Field:

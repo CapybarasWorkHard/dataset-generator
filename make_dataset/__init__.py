@@ -2,7 +2,7 @@ from typing import Sequence
 
 from PIL import Image
 
-from datasetgenerator.fields import Field, FieldGroup
+from make_dataset.fields import Field, FieldGroup
 
 __version__ = '0.1.0'
 
