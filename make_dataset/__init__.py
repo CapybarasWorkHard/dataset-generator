@@ -12,7 +12,7 @@ class DocumentGenerator:
     """Create an image and render all fields on it"""
 
     groups: Sequence[FieldGroup]
-    image: Image.Image
+    template: Image.Image
 
     @property
     def fields(self) -> list[Field]:
@@ -24,16 +24,16 @@ class DocumentGenerator:
 
     def __init__(
         self,
-        image: Image.Image,
+        template: Image.Image,
         groups: Sequence[FieldGroup],
     ) -> None:
         self.groups = groups
-        self.image = image
+        self.template = template
 
     def generate(self) -> Image.Image:
-        image = self.image
+        image = self.template
 
-        for renderer in self.groups:
-            image = renderer.render(image)
+        for group in self.groups:
+            image = group.render(image)
 
         return image
