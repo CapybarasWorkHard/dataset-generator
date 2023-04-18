@@ -46,7 +46,7 @@ generator = DocumentGenerator(image, [full_name])
 generator.generate().show()
 ```
 
-**Пример 2**. Использование FieldFactory для геренации данных
+**Пример 2**. Использование FieldFactory для генерации данных
 
 ```python
 from faker import Faker
