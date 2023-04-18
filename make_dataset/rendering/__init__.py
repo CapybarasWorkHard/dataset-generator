@@ -3,7 +3,7 @@ from typing import Literal, Sequence, TypeAlias
 
 from PIL import Image, ImageDraw, ImageFont
 
-from datasetgenerator.fields import Field
+from make_dataset.fields import Field
 
 _Color: TypeAlias = int | str | tuple[int, ...]
 
