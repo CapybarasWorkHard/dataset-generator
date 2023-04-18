@@ -33,8 +33,7 @@ class Offset:
         return cls(vertical, horizontal)
 
     def __iter__(self):
-        for attr in self.vertical, self.horizontal:
-            yield attr
+        yield from (self.vertical, self.horizontal)
 
     def apply(self, x: int, y: int) -> tuple[float, float]:
         """Add the offset to a position"""
