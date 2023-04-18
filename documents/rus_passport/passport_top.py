@@ -1,14 +1,33 @@
 import random
-from textwrap import fill
+import textwrap
 
 from faker import Faker
 from PIL import Image
 
-from documents.passport_bottom import field_font, series_renderer
+from documents.rus_passport import field_renderer, series_renderer
 from make_dataset import DocumentGenerator
 from make_dataset.factories.fields import FieldFactory
 from make_dataset.positioning import Point
-from make_dataset.render import FieldGroup, renderers
+from make_dataset.render import FieldGroup
+
+
+def get_random_department() -> str:
+    department = random.choice(_department_names)
+    text = department.format(
+        city=faker.city(),
+        district=random.choice(_district_names),
+        region=faker.region(),
+    )
+
+    return textwrap.fill(text, 30).upper()
+
+
+def get_random_department_code() -> str:
+    first = random.randint(100, 999)
+    second = random.randint(100, 999)
+
+    return '{}-{}'.format(first, second)
+
 
 _department_names = [
     'ТП №1 ОУФМС РОССИИ ПО {region} В {district} {city}',
@@ -36,52 +55,42 @@ _district_names = [
 
 faker = Faker('ru_RU')
 
-department = FieldFactory(
-    'department', Point(780, 260),
-    value_function=lambda: fill(width=30, text=random.choice(
-        _department_names).format(
-            city=faker.city(),
-            district=random.choice(_district_names),
-            region=faker.region(),
-    ).upper()),
-    offset_limit=(38, 19),
-)
-date_of_issue = FieldFactory(
-    'date_of_issue', Point(430, 500),
-    value_function=lambda: faker.date(r'%d.%m.%Y'),
-    offset_limit=(10, 7)
-)
-department_code = FieldFactory(
-    'department_code', Point(1100, 500),
-    value_function=lambda: '{}-{}'.format(
-        random.randint(100, 999),
-        random.randint(100, 999),
+fields = FieldGroup(field_renderer, (
+    FieldFactory(
+        'department',
+        Point(780, 260),
+        get_random_department,
+        (38, 19),
     ),
-    offset_limit=(10, 7),
-)
-series_first_part = FieldFactory(
-    'series_first_part', Point(336, 83),
-    value_function=lambda: str(random.randint(10, 99)),
-)
-series_second_part = FieldFactory(
-    'series_second_part', Point(458, 83),
-    value_function=lambda: str(random.randint(10, 99)),
-)
-number = FieldFactory(
-    'number', Point(650, 83),
-    value_function=lambda: str(random.randint(100000, 999999)),
-)
-
-field_font.set_multiline_properties(32, 'center')
-fields = FieldGroup(renderers.OpacityRenderer(field_font), (
-    department,
-    date_of_issue,
-    department_code,
+    FieldFactory(
+        'date_of_issue',
+        Point(430, 500),
+        lambda: faker.date(r'%d.%m.%Y'),
+        (10, 7)
+    ),
+    FieldFactory(
+        'department_code',
+        Point(1100, 500),
+        get_random_department_code,
+        (10, 7),
+    ),
 ))
 series = FieldGroup(series_renderer, (
-    series_first_part,
-    series_second_part,
-    number,
+    FieldFactory(
+        'series_first_part',
+        Point(336, 83),
+        lambda: str(random.randint(10, 99)),
+    ),
+    FieldFactory(
+        'series_second_part',
+        Point(458, 83),
+        lambda: str(random.randint(10, 99)),
+    ),
+    FieldFactory(
+        'number',
+        Point(650, 83),
+        lambda: str(random.randint(100000, 999999)),
+    ),
 ))
 
 image_source = 'images/passport-top.png'
