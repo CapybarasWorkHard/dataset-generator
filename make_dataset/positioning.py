@@ -10,8 +10,7 @@ class Point:
     y: int
 
     def __iter__(self):
-        for attr in self.x, self.y:
-            yield attr
+        yield from (self.x, self.y)
 
     def shift(self, vertical: int, horizontal: int) -> 'Point':
         """Get new shifted position"""
