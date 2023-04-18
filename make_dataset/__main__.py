@@ -6,13 +6,13 @@ import traceback
 import uuid
 from pathlib import Path
 
-from documents.passport_bottom import passport_bottom_generator
-from documents.passport_top import passport_top_generator
+from documents.rus_passport.passport_bottom import passport_bottom_generator
+from documents.rus_passport.passport_top import passport_top_generator
 from make_dataset import DocumentGenerator
 
 DOCUMENTS = {
-    'ru_passport_page4': passport_bottom_generator,
-    'ru_passport_page5': passport_top_generator,
+    'ru_passport_page4': passport_top_generator,
+    'ru_passport_page5': passport_bottom_generator,
 }
 
 
@@ -24,9 +24,11 @@ def enable_logging(level: int = logging.DEBUG) -> None:
 
 
 def get_uid() -> str:
-    """Generate random uuid4 """
+    """Generate random uuid4"""
     uid = uuid.uuid4()
-    return str(uid).replace('-', '')
+    name = str(uid).split('-')[:2]
+
+    return ''.join(name)
 
 
 def create_argument_parser() -> argparse.ArgumentParser:
