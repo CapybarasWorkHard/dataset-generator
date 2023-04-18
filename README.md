@@ -6,7 +6,15 @@
 
 ### В консоли
 
-    python main.py {document} {dest} -l {count}
+    python -m make_dataset {document} {dest} -l {count}
+
+Где:
+
+**document** – название генератора
+
+**dest** – директория, в которую будут сохраняться документы
+
+**count** – количество файлов для генерации
 
 ### Из кода
 
