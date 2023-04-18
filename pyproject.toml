@@ -1,3 +1,24 @@
 [build-system]
-requires = ["setuptools ~= 58.0", "wheel", "Pillow", "Faker"]
+requires = ["setuptools"]
 build-backend = 'setuptools.build_meta'
+
+[project]
+name = "dataset-generator"
+requires-python = ">=3.10"
+dynamic = ["version", "readme"]
+dependencies = [
+    "Pillow",
+    "Faker",
+]
+
+[tool.setuptools.packages.find]
+exclude = [
+    "tests",
+    "images",
+    "fonts",
+]
+
+[tool.setuptools.dynamic]
+version = {attr = "make_dataset.__version__"}
+readme = {file = ["README.md"]}
+

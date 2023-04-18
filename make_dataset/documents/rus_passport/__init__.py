@@ -5,7 +5,7 @@ from PIL.Image import Resampling
 from make_dataset.render import Font
 from make_dataset.render.renderers import OpacityRenderer, RotationRenderer
 
-root_dir = Path(__file__).resolve().parent.parent.parent
+root_dir = Path(__file__).resolve().parent.parent.parent.parent
 fonts_dir = root_dir / 'fonts'
 images_dir = root_dir / 'images'
 
