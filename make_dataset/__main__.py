@@ -57,7 +57,11 @@ def create_argument_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def create_dataset(generator: DocumentGenerator, length: int, save_path: Path) -> None:
+def create_dataset(
+    generator: DocumentGenerator,
+    length: int,
+    save_path: Path,
+) -> None:
     for iteration in range(length):
         path = save_path / f'{get_uid()}.png'
         generator.generate().save(path)
