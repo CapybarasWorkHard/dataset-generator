@@ -14,7 +14,7 @@ class Point:
 
     def shift(self, vertical: int, horizontal: int) -> 'Point':
         """Get new shifted position"""
-        return Point(self.x + horizontal, self.y + vertical)
+        return Point(self.x + vertical, self.y + horizontal)
 
 
 @dataclass
