@@ -4,8 +4,8 @@ import textwrap
 from faker import Faker
 from PIL import Image
 
-from make_dataset.documents.rus_passport import field_renderer, series_renderer
 from make_dataset import DocumentGenerator
+from make_dataset.documents.rus_passport import field_renderer, series_renderer
 from make_dataset.factories.fields import FieldFactory
 from make_dataset.positioning import Point
 from make_dataset.render import FieldGroup
@@ -96,4 +96,4 @@ series = FieldGroup(series_renderer, (
 image_source = 'images/passport-top.png'
 image = Image.open(image_source)
 
-passport_top_generator = DocumentGenerator(image, (fields, series))
+generator = DocumentGenerator(image, (fields, series))
