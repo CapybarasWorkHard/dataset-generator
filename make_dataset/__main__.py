@@ -6,13 +6,13 @@ import traceback
 import uuid
 from pathlib import Path
 
-from make_dataset.documents.rus_passport.passport_bottom import passport_bottom_generator
-from make_dataset.documents.rus_passport.passport_top import passport_top_generator
 from make_dataset import DocumentGenerator
+from make_dataset.documents.rus_passport.page2 import generator as page2
+from make_dataset.documents.rus_passport.page3 import generator as page3
 
 DOCUMENTS = {
-    'ru_passport_page4': passport_top_generator,
-    'ru_passport_page5': passport_bottom_generator,
+    'ru_passport_page2': page2,
+    'ru_passport_page3': page3,
 }
 
 
